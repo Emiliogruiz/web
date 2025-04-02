@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación - HistoGeo Adaptativo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-globe-americas"></i> HistoGeo Adaptativo
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="student-dashboard.html">Panel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="library.html">Biblioteca</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="quiz.html">Evaluaciones</a>
+                    </li>
+                </ul>
+                <div class="dropdown">
+                    <a class="btn btn-light dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i> Usuario Estudiante
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> Mi Perfil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Configuración</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="index.html"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="student-dashboard.html">Panel</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Evaluación: Geografía de América del Sur</li>
+            </ol>
+        </nav>
+        
+        <div class="row">
+            <!-- Quiz Information and Progress -->
+            <div class="col-lg-3 mb-4">
+                <div class="card sticky-top" style="top: 20px;">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Información de la Evaluación</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title data-placeholder" data-ai-field="quiz-title">Título de la Evaluación</h5>
+                        <p class="card-text data-placeholder" data-ai-field="quiz-description">Descripción de la evaluación adaptativa.</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span>Progreso</span>
+                            <span class="data-placeholder" data-ai-field="quiz-progress">0/0</span>
+                        </div>
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-success data-progress" role="progressbar" style="width: 0%" 
+                                 data-ai-field="quiz-progress-bar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span>Tiempo restante</span>
+                            <span id="countdown" class="data-placeholder" data-ai-field="quiz-time-remaining">--:--</span>
+                        </div>
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-warning data-progress" role="progressbar" style="width: 100%" 
+                                 data-ai-field="quiz-time-bar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        
+                        <div class="alert alert-info" role="alert">
+                            <h6 class="alert-heading">Evaluación Adaptativa</h6>
+                            <p class="mb-0">Esta evaluación ajusta automáticamente el nivel de dificultad según tu desempeño.</p>
+                        </div>
+                        
+                        <div class="d-grid gap-2 mt-3">
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#quitModal">
+                                <i class="bi bi-x-circle"></i> Abandonar evaluación
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Quiz Content -->
+            <div class="col-lg-9">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0 data-placeholder" data-ai-field="question-number">Pregunta 0 de 0</h4>
+                        <span class="badge bg-primary data-placeholder" data-ai-field="question-difficulty">Dificultad</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="question-container">
+                            <div class="question-content">
+                                <h5 class="mb-3 data-placeholder" data-ai-field="question-text">La pregunta se cargará aquí...</h5>
+                                
+                                <div class="d-flex mb-4">
+                                    <div class="image-placeholder bg-light rounded me-3" style="min-width: 300px; height: 200px; display: flex; align-items: center; justify-content: center;">
+                                        <i class="bi bi-image fs-1 text-muted"></i>
+                                    </div>
+                                    <div>
+                                        <p class="data-placeholder" data-ai-field="question-context-1">Descripción contextual de la pregunta.</p>
+                                        <p class="data-placeholder" data-ai-field="question-context-2">Información adicional relacionada con la pregunta.</p>
+                                    </div>
+                                </div>
+                                
+                                <form id="quiz-form">
+                                    <div class="mb-3" id="question-options-container">
+                                        <div class="text-center py-4 text-muted">
+                                            <i class="bi bi-list-check fs-1"></i>
+                                            <p>Las opciones de respuesta se cargarán automáticamente...</p>
+                                        </div>
+                                        <!-- Las opciones de respuesta se cargarán aquí dinámicamente -->
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between mt-4">
+                                        <button type="button" class="btn btn-outline-secondary" id="prev-question">
+                                            <i class="bi bi-arrow-left"></i> Pregunta anterior
+                                        </button>
+                                        <button type="button" class="btn btn-primary" id="next-question">
+                                            Siguiente pregunta <i class="bi bi-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Map Interactive Section -->
+                <div class="card mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="bi bi-map"></i> Mapa Interactivo</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Para esta pregunta, puedes utilizar el mapa interactivo para ubicar la cordillera mencionada:</p>
+                        
+                        <div class="map-container mb-3" style="height: 300px; background-color: #eaeaea; position: relative;">
+                            <div id="interactive-map-container" class="d-flex align-items-center justify-content-center h-100">
+                                <div class="text-center">
+                                    <i class="bi bi-map fs-1 text-muted"></i>
+                                    <p class="mt-2">El mapa interactivo se cargará aquí</p>
+                                    <div class="spinner-border text-primary mt-2" role="status">
+                                        <span class="visually-hidden">Cargando...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-success" role="alert">
+                            <i class="bi bi-info-circle"></i> Puedes hacer clic en el mapa para identificar la ubicación de la cordillera en cuestión.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Question Navigation -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Navegación de Preguntas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="question-nav d-flex flex-wrap justify-content-center gap-2" id="question-navigation-container">
+                            <div class="text-center py-3 text-muted">
+                                <p>La navegación entre preguntas se generará automáticamente</p>
+                            </div>
+                            <!-- La navegación entre preguntas se generará aquí dinámicamente -->
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#finishModal">
+                                <i class="bi bi-check-circle"></i> Finalizar evaluación
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quit Quiz Modal -->
+    <div class="modal fade" id="quitModal" tabindex="-1" aria-labelledby="quitModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quitModalLabel">¿Abandonar evaluación?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>¿Estás seguro de que deseas abandonar esta evaluación? Tu progreso no se guardará.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="student-dashboard.html" class="btn btn-danger">Abandonar evaluación</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Finish Quiz Modal -->
+    <div class="modal fade" id="finishModal" tabindex="-1" aria-labelledby="finishModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="finishModalLabel">¿Finalizar evaluación?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Aún tienes preguntas sin responder. ¿Estás seguro de que deseas finalizar la evaluación?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#resultsModal">Finalizar evaluación</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Results Modal -->
+    <div class="modal fade" id="resultsModal" tabindex="-1" aria-labelledby="resultsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="resultsModalLabel">Resultados de la Evaluación</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="text-center mb-4">
+                                <div class="display-4 mb-2 data-placeholder" data-ai-field="quiz-score">--%</div>
+                                <p class="text-muted">Calificación obtenida</p>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <h5>Resumen de tu desempeño</h5>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-success data-progress" role="progressbar" style="width: 0%" 
+                                         data-ai-field="correct-answers-bar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-between small">
+                                    <span class="data-placeholder" data-ai-field="correct-answers">0 preguntas correctas</span>
+                                    <span class="data-placeholder" data-ai-field="correct-percentage">0%</span>
+                                </div>
+                                
+                                <div class="progress mt-2 mb-2">
+                                    <div class="progress-bar bg-danger data-progress" role="progressbar" style="width: 0%" 
+                                         data-ai-field="incorrect-answers-bar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-between small">
+                                    <span class="data-placeholder" data-ai-field="incorrect-answers">0 preguntas incorrectas</span>
+                                    <span class="data-placeholder" data-ai-field="incorrect-percentage">0%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <div class="card-header bg-info text-white">
+                                    <h6 class="mb-0">Análisis de IA</h6>
+                                </div>
+                                <div class="card-body">
+                                    <p>Basado en tu desempeño, hemos identificado las siguientes áreas de mejora:</p>
+                                    <ul class="mb-0" id="ai-analysis-container">
+                                        <li class="text-center py-2 text-muted">
+                                            <small>Analizando tu desempeño...</small>
+                                        </li>
+                                        <!-- El análisis de IA se generará aquí dinámicamente -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Recomendaciones personalizadas</h5>
+                            <div class="list-group" id="personalized-recommendations-container">
+                                <div class="text-center py-4 text-muted">
+                                    <i class="bi bi-lightbulb fs-1"></i>
+                                    <p>Generando recomendaciones personalizadas...</p>
+                                    <div class="spinner-grow text-warning" role="status">
+                                        <span class="visually-hidden">Generando...</span>
+                                    </div>
+                                </div>
+                                <!-- Las recomendaciones personalizadas se generarán aquí dinámicamente -->
+                            </div>
+                            
+                            <div class="alert alert-warning mt-3" role="alert">
+                                <h6 class="alert-heading"><i class="bi bi-lightbulb"></i> Consejo de estudio</h6>
+                                <p class="mb-0 data-placeholder" data-ai-field="study-tip">
+                                    Generando consejo de estudio personalizado...
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <a href="student-dashboard.html" class="btn btn-primary">Volver al Panel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>HistoGeo Adaptativo</h5>
+                    <p>Una plataforma educativa desarrollada para estudiantes de Ingeniería en Ciencias y Sistemas, USAC.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Enlaces</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">Acerca de</a></li>
+                        <li><a href="#" class="text-light">Contacto</a></li>
+                        <li><a href="#" class="text-light">Términos de uso</a></li>
+                        <li><a href="#" class="text-light">Privacidad</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Soporte</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">Centro de ayuda</a></li>
+                        <li><a href="#" class="text-light">Reportar un problema</a></li>
+                        <li><a href="#" class="text-light">Sugerencias</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 HistoGeo Adaptativo. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sistema de Ajuste Automático de Dificultad por IA -->
+    <div class="card mb-4">
+        <div class="card-header bg-light">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-sliders"></i> Sistema Adaptativo de Dificultad</h5>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="adaptive-difficulty-toggle" checked>
+                    <label class="form-check-label" for="adaptive-difficulty-toggle">Ajuste automático</label>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center">
+                        <div class="difficulty-indicator me-3">
+                            <div class="position-relative" style="width: 80px; height: 80px;">
+                                <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                                    <span class="fs-4 fw-bold data-placeholder" data-ai-field="current-difficulty-level">--</span>
+                                </div>
+                                <svg viewBox="0 0 36 36" class="difficulty-chart">
+                                    <path class="difficulty-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#eee" stroke-width="3" />
+                                    <path class="difficulty-fill" data-ai-field="difficulty-gauge" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#4e73df" stroke-width="3" stroke-dasharray="0, 100" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 class="mb-1 data-placeholder" data-ai-field="difficulty-name">Nivel de dificultad</h6>
+                            <p class="text-muted mb-0 small data-placeholder" data-ai-field="difficulty-description">La IA ajustará la dificultad según tu desempeño</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card bg-light border-0">
+                        <div class="card-body py-2">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-lightbulb-fill text-warning me-2 fs-4"></i>
+                                <div>
+                                    <h6 class="mb-1">Funcionamiento del sistema adaptativo</h6>
+                                    <p class="mb-0 small">La IA analiza tu desempeño en tiempo real y ajusta la dificultad de las preguntas para optimizar tu aprendizaje. A medida que respondas correctamente, las preguntas serán más desafiantes.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <div class="d-flex align-items-center mb-1">
+                            <div class="me-2" style="width: 100px;">Memoria</div>
+                            <div class="flex-grow-1">
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-info data-progress" role="progressbar" style="width: 0%" data-ai-field="memory-skill-bar"></div>
+                                </div>
+                            </div>
+                            <div class="ms-2 small data-placeholder" data-ai-field="memory-skill-percentage">--%</div>
+                        </div>
+                        <div class="d-flex align-items-center mb-1">
+                            <div class="me-2" style="width: 100px;">Análisis</div>
+                            <div class="flex-grow-1">
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-primary data-progress" role="progressbar" style="width: 0%" data-ai-field="analysis-skill-bar"></div>
+                                </div>
+                            </div>
+                            <div class="ms-2 small data-placeholder" data-ai-field="analysis-skill-percentage">--%</div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="me-2" style="width: 100px;">Aplicación</div>
+                            <div class="flex-grow-1">
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-success data-progress" role="progressbar" style="width: 0%" data-ai-field="application-skill-bar"></div>
+                                </div>
+                            </div>
+                            <div class="ms-2 small data-placeholder" data-ai-field="application-skill-percentage">--%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sistema de Retroalimentación Inmediata -->
+    <div id="feedback-container" class="mb-4" style="display: none;">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-chat-square-text"></i> Retroalimentación Personalizada</h5>
+                <button type="button" class="btn-close" id="close-feedback"></button>
+            </div>
+            <div class="card-body">
+                <div class="feedback-result mb-3">
+                    <!-- Aquí se mostrará el resultado (correcto/incorrecto) -->
+                    <div class="placeholder-glow w-100">
+                        <span class="placeholder col-6"></span>
+                    </div>
+                </div>
+                
+                <div class="feedback-explanation">
+                    <!-- Aquí se mostrará la explicación de la respuesta -->
+                    <div class="placeholder-glow w-100">
+                        <span class="placeholder col-12"></span>
+                        <span class="placeholder col-10 mt-1"></span>
+                        <span class="placeholder col-8 mt-1"></span>
+                    </div>
+                </div>
+                
+                <div class="feedback-resources mt-3">
+                    <h6>Recursos Recomendados para Reforzar</h6>
+                    <div id="feedback-resources-container">
+                        <div class="placeholder-glow w-100">
+                            <span class="placeholder col-8"></span>
+                            <span class="placeholder col-4 mt-1"></span>
+                            <span class="placeholder col-6 mt-1"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-3 text-end">
+                    <button type="button" class="btn btn-outline-primary" id="next-after-feedback">
+                        Continuar <i class="bi bi-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sistema de Integración con Base de Datos -->
+    <div class="modal fade" id="quiz-completion-modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="bi bi-cloud-upload"></i> Almacenamiento de Resultados</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="progress mb-3">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%" id="upload-progress-bar"></div>
+                    </div>
+                    
+                    <div id="data-storage-container">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3">
+                                <i class="bi bi-database-check fs-1 text-success"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">Almacenamiento de datos en progreso</h5>
+                                <p class="mb-0">Tus resultados están siendo procesados y almacenados para análisis posterior y personalización del aprendizaje.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card bg-light mb-3">
+                            <div class="card-body">
+                                <h6><i class="bi bi-shield-check text-primary me-2"></i>Datos almacenados para análisis</h6>
+                                <ul class="mb-0">
+                                    <li>Respuestas a preguntas individual</li>
+                                    <li>Tiempo de respuesta por pregunta</li>
+                                    <li>Patrones de navegación entre preguntas</li>
+                                    <li>Nivel de dificultad adaptativo alcanzado</li>
+                                    <li>Recursos consultados durante la evaluación</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mb-3" id="ai-processing-status">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Procesando...</span>
+                            </div>
+                            <p class="mt-2 mb-0">La IA está analizando tu desempeño</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <a href="student-dashboard.html" class="btn btn-primary">Ver mi dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 

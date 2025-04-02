@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca de Contenidos - HistoGeo Adaptativo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-globe-americas"></i> HistoGeo Adaptativo
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="student-dashboard.html">Panel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="library.html">Biblioteca</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="quiz.html">Evaluaciones</a>
+                    </li>
+                </ul>
+                <div class="dropdown">
+                    <a class="btn btn-light dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i> Usuario Estudiante
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> Mi Perfil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Configuración</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="index.html"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="student-dashboard.html">Panel</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Biblioteca de Contenidos</li>
+            </ol>
+        </nav>
+        
+        <div class="row">
+            <!-- Sidebar Filters -->
+            <div class="col-lg-3 mb-4">
+                <div class="card sticky-top" style="top: 20px;">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Filtros</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="searchContent" class="form-label">Buscar contenido</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="searchContent" placeholder="Palabra clave...">
+                                <button class="btn btn-outline-primary" type="button"><i class="bi bi-search"></i></button>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Categoría</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="historyCheck" checked>
+                                <label class="form-check-label" for="historyCheck">Historia</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="geographyCheck" checked>
+                                <label class="form-check-label" for="geographyCheck">Geografía</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="mixedCheck" checked>
+                                <label class="form-check-label" for="mixedCheck">Contenido Mixto</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Nivel de dificultad</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="beginnerCheck" checked>
+                                <label class="form-check-label" for="beginnerCheck">Principiante</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="intermediateCheck" checked>
+                                <label class="form-check-label" for="intermediateCheck">Intermedio</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="advancedCheck" checked>
+                                <label class="form-check-label" for="advancedCheck">Avanzado</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Tipo de contenido</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="lessonCheck" checked>
+                                <label class="form-check-label" for="lessonCheck">Lecciones</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="quizCheck" checked>
+                                <label class="form-check-label" for="quizCheck">Evaluaciones</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="interactiveCheck" checked>
+                                <label class="form-check-label" for="interactiveCheck">Actividades Interactivas</label>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="regionSelect" class="form-label">Región geográfica</label>
+                            <select class="form-select" id="regionSelect">
+                                <option selected value="">Todas las regiones</option>
+                                <option value="america">América</option>
+                                <option value="europa">Europa</option>
+                                <option value="asia">Asia</option>
+                                <option value="africa">África</option>
+                                <option value="oceania">Oceanía</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="periodSelect" class="form-label">Periodo histórico</label>
+                            <select class="form-select" id="periodSelect">
+                                <option selected value="">Todos los periodos</option>
+                                <option value="ancient">Antigüedad</option>
+                                <option value="medieval">Edad Media</option>
+                                <option value="modern">Edad Moderna</option>
+                                <option value="contemporary">Edad Contemporánea</option>
+                            </select>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-primary">Aplicar filtros</button>
+                            <button type="button" class="btn btn-outline-secondary">Restablecer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content Area -->
+            <div class="col-lg-9">
+                <!-- AI Recommendation Banner -->
+                <div class="card mb-4">
+                    <div class="card-body bg-light">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h4><i class="bi bi-lightbulb text-warning"></i> Recomendación de IA</h4>
+                                <p class="mb-0 data-placeholder" data-ai-field="library-recommendation">
+                                    El sistema de IA generará recomendaciones personalizadas basadas en tu progreso y estilo de aprendizaje.
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <button class="btn btn-primary mt-3 mt-md-0">Ver recomendaciones</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content Filters and Layout Toggle -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <span class="me-2">Ordenar por:</span>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-secondary active">Relevancia</button>
+                            <button type="button" class="btn btn-outline-secondary">Más reciente</button>
+                            <button type="button" class="btn btn-outline-secondary">A-Z</button>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="me-2">Vista:</span>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-outline-secondary active"><i class="bi bi-grid-3x3-gap"></i></button>
+                            <button type="button" class="btn btn-outline-secondary"><i class="bi bi-list"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content Grid -->
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="content-grid-container">
+                    <div class="col-12 text-center py-5">
+                        <i class="bi bi-journal-text fs-1 text-muted"></i>
+                        <h4 class="mt-3 text-muted">Cargando contenido...</h4>
+                        <p class="text-muted">El sistema está personalizando el contenido para tu perfil de aprendizaje</p>
+                        <div class="spinner-border text-primary mt-2" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                                </div>
+                            </div>
+                    <!-- El contenido de la biblioteca se cargará aquí dinámicamente -->
+                </div>
+                
+                <!-- Pagination -->
+                <nav aria-label="Navegación de páginas" class="mt-4">
+                    <ul class="pagination justify-content-center" id="pagination-container">
+                        <!-- La paginación se generará dinámicamente -->
+                        <li class="page-item disabled">
+                            <span class="page-link">Cargando páginas...</span>
+                        </li>
+                    </ul>
+                </nav>
+                
+                <!-- Suggested Topics -->
+                <div class="card mt-4">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Temas Sugeridos</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap gap-2" id="suggested-topics-container">
+                            <div class="text-center w-100 py-3">
+                                <i class="bi bi-tags fs-4 text-muted"></i>
+                                <p class="text-muted mt-2">Generando temas relevantes para ti...</p>
+                            </div>
+                            <!-- Los temas sugeridos se generarán aquí dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Añadir Sistema de Categorización Dinámica por IA -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="bi bi-diagram-3"></i> Categorización Inteligente</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p>La IA ha analizado tu perfil de aprendizaje y ha creado categorías personalizadas para facilitar tu navegación.</p>
+                                    </div>
+                                    <div class="col-md-4 text-end">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="ai-categories-toggle" checked>
+                                            <label class="form-check-label" for="ai-categories-toggle">Activar categorización por IA</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div id="ai-categories-container" class="mt-3">
+                                    <div class="d-flex flex-wrap gap-2">
+                                        <div class="placeholder-glow w-100">
+                                            <span class="placeholder col-3 bg-primary"></span>
+                                            <span class="placeholder col-4 bg-success ms-2"></span>
+                                            <span class="placeholder col-2 bg-info ms-2"></span>
+                                            <span class="placeholder col-2 bg-warning ms-2"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Búsqueda Avanzada con Filtros por IA -->
+                <div class="card mb-4">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="bi bi-search"></i> Búsqueda Avanzada</h5>
+                        <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#advancedSearchCollapse">
+                            <i class="bi bi-sliders"></i> Mostrar opciones
+                        </button>
+                    </div>
+                    <div class="collapse" id="advancedSearchCollapse">
+                        <div class="card-body">
+                            <form id="advanced-search-form">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="searchQuery" placeholder="Buscar contenido...">
+                                            <button class="btn btn-outline-primary" type="button">
+                                                <i class="bi bi-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-select" id="searchDifficulty" data-ai-field="difficulty-options">
+                                            <option value="">Dificultad recomendada por IA</option>
+                                            <option value="basic">Básico</option>
+                                            <option value="intermediate">Intermedio</option>
+                                            <option value="advanced">Avanzado</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-select" id="searchLearningStyle" data-ai-field="learning-style-options">
+                                            <option value="">Estilo de aprendizaje detectado</option>
+                                            <option value="visual">Visual</option>
+                                            <option value="auditory">Auditivo</option>
+                                            <option value="reading">Lectura/Escritura</option>
+                                            <option value="kinesthetic">Kinestésico</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="row g-3 mt-2">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Áreas de conocimiento:</label>
+                                        <div id="knowledge-areas-container" class="d-flex flex-wrap gap-2" data-ai-field="knowledge-areas">
+                                            <div class="placeholder-glow w-100">
+                                                <span class="placeholder col-5"></span>
+                                                <span class="placeholder col-4 ms-2"></span>
+                                                <span class="placeholder col-2 ms-2"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Temas sugeridos:</label>
+                                        <div id="suggested-topics-container" class="d-flex flex-wrap gap-2" data-ai-field="suggested-topics">
+                                            <div class="placeholder-glow w-100">
+                                                <span class="placeholder col-4"></span>
+                                                <span class="placeholder col-5 ms-2"></span>
+                                                <span class="placeholder col-2 ms-2"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Formato de contenido:</label>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="content-text" checked>
+                                                <label class="form-check-label" for="content-text">Texto</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="content-video" checked>
+                                                <label class="form-check-label" for="content-video">Video</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="content-interactive" checked>
+                                                <label class="form-check-label" for="content-interactive">Interactivo</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="content-quiz" checked>
+                                                <label class="form-check-label" for="content-quiz">Quiz</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mt-3">
+                                    <div class="col-12 text-end">
+                                        <button type="button" class="btn btn-outline-secondary me-2">Limpiar</button>
+                                        <button type="button" class="btn btn-primary">Buscar</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recursos Generados/Encontrados por IA -->
+                <div class="card mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="bi bi-robot"></i> Recursos Encontrados por IA</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>La IA ha analizado tu actividad reciente y ha encontrado estos recursos externos que podrían ayudarte:</p>
+                        
+                        <div id="ai-resources-container" class="mt-3">
+                            <div class="d-flex align-items-center justify-content-center py-5 text-muted">
+                                <div class="text-center">
+                                    <i class="bi bi-search fs-1"></i>
+                                    <p class="mt-3">La IA buscará recursos educativos relevantes para ti</p>
+                                    <div class="spinner-grow text-info" role="status">
+                                        <span class="visually-hidden">Buscando...</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Aquí se cargarán los recursos encontrados por la IA -->
+                        </div>
+                        
+                        <div class="mt-3">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Solicitar a la IA buscar recursos específicos..." id="ai-resource-request">
+                                <button class="btn btn-outline-primary" type="button" id="request-resources-btn">
+                                    <i class="bi bi-search"></i> Buscar con IA
+                                </button>
+                            </div>
+                            <small class="text-muted">Ejemplo: "Busca recursos sobre la Revolución Industrial enfocados en América Latina"</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>HistoGeo Adaptativo</h5>
+                    <p>Una plataforma educativa desarrollada para estudiantes de Ingeniería en Ciencias y Sistemas, USAC.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Enlaces</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">Acerca de</a></li>
+                        <li><a href="#" class="text-light">Contacto</a></li>
+                        <li><a href="#" class="text-light">Términos de uso</a></li>
+                        <li><a href="#" class="text-light">Privacidad</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Soporte</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">Centro de ayuda</a></li>
+                        <li><a href="#" class="text-light">Reportar un problema</a></li>
+                        <li><a href="#" class="text-light">Sugerencias</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 HistoGeo Adaptativo. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 

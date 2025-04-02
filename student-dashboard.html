@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Estudiante - HistoGeo Adaptativo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-globe-americas"></i> HistoGeo Adaptativo
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="student-dashboard.html">Panel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="library.html">Biblioteca</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="quiz.html">Evaluaciones</a>
+                    </li>
+                </ul>
+                <div class="dropdown">
+                    <a class="btn btn-light dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i> Usuario Estudiante
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> Mi Perfil</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear"></i> Configuración</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="index.html"><i class="bi bi-box-arrow-right"></i> Cerrar Sesión</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <img src="https://via.placeholder.com/150" class="rounded-circle mb-3" alt="Foto de perfil">
+                        <h5 class="card-title">
+                            <span class="data-placeholder" data-ai-field="student-name">Nombre del Estudiante</span>
+                        </h5>
+                        <p class="card-text text-muted">
+                            <span class="data-placeholder" data-ai-field="student-program">Programa Académico</span>
+                        </p>
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-success data-progress" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                <span class="data-placeholder" data-ai-field="overall-progress">0</span>%
+                            </div>
+                        </div>
+                        <p class="text-muted small">Nivel de progreso general</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="data-placeholder" data-ai-field="subject-1">Tema 1</span>
+                            <span class="badge bg-primary rounded-pill data-placeholder" data-ai-field="subject-1-progress">--%</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="data-placeholder" data-ai-field="subject-2">Tema 2</span>
+                            <span class="badge bg-primary rounded-pill data-placeholder" data-ai-field="subject-2-progress">--%</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span class="data-placeholder" data-ai-field="subject-3">Tema 3</span>
+                            <span class="badge bg-primary rounded-pill data-placeholder" data-ai-field="subject-3-progress">--%</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Main Dashboard Content -->
+            <div class="col-lg-9">
+                <!-- Welcome and Stats -->
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="card-title">¡Bienvenido de nuevo, <span class="data-placeholder" data-ai-field="student-first-name">Estudiante</span>!</h4>
+                                <p class="card-text">Continúa con tu aprendizaje adaptativo. El sistema ha identificado las siguientes recomendaciones basadas en tu progreso.</p>
+                                <div class="alert alert-info" role="alert">
+                                    <i class="bi bi-info-circle"></i> <strong>Consejo IA:</strong> 
+                                    <span id="ai-recommendation" class="data-placeholder-ai" data-ai-field="personalized-recommendation">
+                                        Esperando recomendaciones personalizadas...
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Estadísticas Rápidas</h5>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span><i class="bi bi-book text-primary"></i> Lecciones Completadas</span>
+                                    <span class="badge bg-primary data-placeholder" data-ai-field="completed-lessons">0/0</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span><i class="bi bi-check-circle text-success"></i> Evaluaciones Aprobadas</span>
+                                    <span class="badge bg-success data-placeholder" data-ai-field="passed-quizzes">0/0</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span><i class="bi bi-star text-warning"></i> Puntos Acumulados</span>
+                                    <span class="badge bg-warning text-dark data-placeholder" data-ai-field="accumulated-points">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Progress Charts -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Progreso de Aprendizaje</h5>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="timeRangeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Últimos 30 días
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="timeRangeDropdown">
+                                <li><a class="dropdown-item" href="#">Últimos 7 días</a></li>
+                                <li><a class="dropdown-item" href="#">Últimos 30 días</a></li>
+                                <li><a class="dropdown-item" href="#">Último semestre</a></li>
+                                <li><a class="dropdown-item" href="#">Todo el tiempo</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <!-- Placeholder para gráfico de progreso -->
+                                <div class="chart-container" style="position: relative; height:250px;">
+                                    <canvas id="progressChart"></canvas>
+                                    <div id="chart-loading" class="chart-placeholder">
+                                        <div class="text-center text-muted pt-5">
+                                            <i class="bi bi-bar-chart-line fs-1"></i>
+                                            <p>El gráfico de progreso se cargará con tus datos personalizados</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="mb-3">Áreas de Enfoque</h6>
+                                <!-- Lista de habilidades con barras de progreso -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span class="data-placeholder" data-ai-field="skill-1">Habilidad 1</span>
+                                        <span class="data-placeholder" data-ai-field="skill-1-percentage">0%</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-primary data-progress" role="progressbar" style="width: 0%" data-ai-field="skill-1-bar"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span class="data-placeholder" data-ai-field="skill-2">Habilidad 2</span>
+                                        <span class="data-placeholder" data-ai-field="skill-2-percentage">0%</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-primary data-progress" role="progressbar" style="width: 0%" data-ai-field="skill-2-bar"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span class="data-placeholder" data-ai-field="skill-3">Habilidad 3</span>
+                                        <span class="data-placeholder" data-ai-field="skill-3-percentage">0%</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-primary data-progress" role="progressbar" style="width: 0%" data-ai-field="skill-3-bar"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <span class="data-placeholder" data-ai-field="skill-4">Habilidad 4</span>
+                                        <span class="data-placeholder" data-ai-field="skill-4-percentage">0%</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-primary data-progress" role="progressbar" style="width: 0%" data-ai-field="skill-4-bar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recommended Activities -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Actividades Recomendadas</h5>
+                    </div>
+                    <div id="recommended-activities-container" class="list-group list-group-flush">
+                        <div class="text-center py-4 text-muted">
+                            <i class="bi bi-hourglass fs-1"></i>
+                            <p>Cargando actividades recomendadas personalizadas...</p>
+                        </div>
+                        <!-- Las actividades recomendadas se cargarán dinámicamente aquí -->
+                    </div>
+                    <div class="card-footer text-center">
+                        <a href="library.html" class="btn btn-outline-primary btn-sm">Ver más actividades</a>
+                    </div>
+                </div>
+                
+                <!-- Recent Feedback -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Retroalimentación Reciente</h5>
+                    </div>
+                    <div class="card-body" id="recent-feedback-container">
+                        <div class="text-center py-4 text-muted">
+                            <i class="bi bi-chat-square-text fs-1"></i>
+                            <p>Aún no hay retroalimentación disponible</p>
+                            <p><small>Completa evaluaciones para recibir comentarios personalizados</small></p>
+                        </div>
+                        <!-- La retroalimentación se cargará dinámicamente aquí -->
+                    </div>
+                </div>
+
+                <!-- Visualización Detallada de Fortalezas y Debilidades -->
+                <div class="card mb-4">
+                    <div class="card-header bg-gradient d-flex justify-content-between align-items-center" style="background: linear-gradient(90deg, #4e73df 0%, #36b9cc 100%); color: white;">
+                        <h5 class="mb-0"><i class="bi bi-graph-up"></i> Análisis de Fortalezas y Debilidades</h5>
+                        <button class="btn btn-sm btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#strengthsWeaknessesCollapse">
+                            <i class="bi bi-arrows-expand"></i> Expandir
+                        </button>
+                    </div>
+                    <div class="collapse" id="strengthsWeaknessesCollapse">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card border-left-success shadow h-100">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <h6 class="m-0 font-weight-bold text-success"><i class="bi bi-trophy me-2"></i>Fortalezas Detectadas</h6>
+                                                <div class="badge bg-success">Nivel Alto</div>
+                                            </div>
+                                            <div id="strengths-container">
+                                                <div class="placeholder-glow w-100">
+                                                    <span class="placeholder col-12"></span>
+                                                    <span class="placeholder col-10 mt-1"></span>
+                                                    <span class="placeholder col-8 mt-1"></span>
+                                                </div>
+                                                <!-- La IA mostrará aquí las fortalezas -->
+                                            </div>
+                                            
+                                            <div class="mt-3">
+                                                <h6 class="text-success small"><i class="bi bi-lightbulb me-1"></i>Recomendación para potenciar</h6>
+                                                <p class="small text-muted mb-0 data-placeholder" data-ai-field="strengths-recommendation">La IA generará recomendaciones para potenciar tus fortalezas</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card border-left-warning shadow h-100">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <h6 class="m-0 font-weight-bold text-warning"><i class="bi bi-arrow-up-circle me-2"></i>Áreas de Mejora</h6>
+                                                <div class="badge bg-warning text-dark">Oportunidad</div>
+                                            </div>
+                                            <div id="weaknesses-container">
+                                                <div class="placeholder-glow w-100">
+                                                    <span class="placeholder col-12"></span>
+                                                    <span class="placeholder col-10 mt-1"></span>
+                                                    <span class="placeholder col-8 mt-1"></span>
+                                                </div>
+                                                <!-- La IA mostrará aquí las áreas de mejora -->
+                                            </div>
+                                            
+                                            <div class="mt-3">
+                                                <h6 class="text-warning small"><i class="bi bi-lightbulb me-1"></i>Plan de acción sugerido</h6>
+                                                <p class="small text-muted mb-0 data-placeholder" data-ai-field="weaknesses-recommendation">La IA generará un plan de acción personalizado para mejorar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <div class="card bg-light">
+                                        <div class="card-body">
+                                            <h6><i class="bi bi-graph-up text-primary me-2"></i>Comparativa de Habilidades</h6>
+                                            <div style="height: 250px;" id="skills-radar-container">
+                                                <canvas id="skillsRadarChart"></canvas>
+                                                <div class="chart-placeholder d-flex align-items-center justify-content-center">
+                                                    <div class="text-center text-muted">
+                                                        <i class="bi bi-graph-up fs-1"></i>
+                                                        <p class="mt-2">El gráfico de habilidades se generará con tus datos</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Área de Interacción Directa con IA -->
+                <div class="card mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="bi bi-robot"></i> Asistente IA Personal</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="ai-chat-container" class="mb-3" style="height: 300px; overflow-y: auto;">
+                            <div class="d-flex justify-content-center align-items-center h-100">
+                                <div class="text-center text-muted">
+                                    <i class="bi bi-chat-square-text fs-1"></i>
+                                    <p class="mt-2">Tu asistente de IA está listo para ayudarte</p>
+                                    <p class="small">Puedes hacer preguntas sobre contenidos, solicitar consejos de estudio o pedir recomendaciones personalizadas</p>
+                                </div>
+                            </div>
+                            <!-- Aquí se mostrarán los mensajes del chat con la IA -->
+                        </div>
+                        
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Escribe tu pregunta o solicitud..." id="ai-input">
+                            <button class="btn btn-primary" type="button" id="send-ai-message">
+                                <i class="bi bi-send"></i> Enviar
+                            </button>
+                        </div>
+                        
+                        <div class="mt-2">
+                            <p class="text-muted small mb-1">Sugerencias:</p>
+                            <div class="d-flex flex-wrap gap-2">
+                                <button class="btn btn-sm btn-outline-secondary suggestion-btn" type="button">¿Qué debería estudiar hoy?</button>
+                                <button class="btn btn-sm btn-outline-secondary suggestion-btn" type="button">Explícame el tema de geografía más reciente</button>
+                                <button class="btn btn-sm btn-outline-secondary suggestion-btn" type="button">¿Cómo puedo mejorar en historia antigua?</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Historial de Evaluaciones -->
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="bi bi-clock-history"></i> Historial de Evaluaciones</h5>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="historyFilterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                Últimos 30 días
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="historyFilterDropdown">
+                                <li><a class="dropdown-item" href="#">Últimos 7 días</a></li>
+                                <li><a class="dropdown-item" href="#">Últimos 30 días</a></li>
+                                <li><a class="dropdown-item" href="#">Último trimestre</a></li>
+                                <li><a class="dropdown-item" href="#">Todo el historial</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3" style="height: 180px;">
+                            <canvas id="evaluationHistoryChart"></canvas>
+                            <div class="chart-placeholder d-flex align-items-center justify-content-center">
+                                <div class="text-center text-muted">
+                                    <i class="bi bi-bar-chart-line fs-1"></i>
+                                    <p class="mt-2">El gráfico de evolución se generará automáticamente</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Evaluación</th>
+                                        <th>Fecha</th>
+                                        <th>Calificación</th>
+                                        <th>Nivel</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="evaluation-history-container">
+                                    <tr>
+                                        <td colspan="5" class="text-center py-4">
+                                            <div class="text-muted">
+                                                <i class="bi bi-hourglass fs-1"></i>
+                                                <p class="mt-2">Cargando historial de evaluaciones...</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- La IA insertará el historial de evaluaciones aquí -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <button type="button" class="btn btn-outline-primary btn-sm">Ver historial completo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>HistoGeo Adaptativo</h5>
+                    <p>Una plataforma educativa desarrollada para estudiantes de Ingeniería en Ciencias y Sistemas, USAC.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Enlaces</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">Acerca de</a></li>
+                        <li><a href="#" class="text-light">Contacto</a></li>
+                        <li><a href="#" class="text-light">Términos de uso</a></li>
+                        <li><a href="#" class="text-light">Privacidad</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Soporte</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">Centro de ayuda</a></li>
+                        <li><a href="#" class="text-light">Reportar un problema</a></li>
+                        <li><a href="#" class="text-light">Sugerencias</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2025 HistoGeo Adaptativo. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 
