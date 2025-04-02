@@ -1,0 +1,710 @@
+/* Custom Styles for HistoGeo Adaptativo */
+
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* Card hover effects */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Timeline Styles for Lesson Page */
+.timeline {
+    position: relative;
+    padding: 0;
+    list-style: none;
+}
+
+.timeline:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 18px;
+    height: 100%;
+    width: 4px;
+    background: #e9ecef;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.timeline-date {
+    position: relative;
+    top: -8px;
+    width: 125px;
+    padding: 4px 0;
+    background: #007bff;
+    color: white;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+.timeline-content {
+    margin-left: 45px;
+    padding: 10px 15px;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.timeline-content h6 {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Progress animation */
+.progress-bar {
+    transition: width 1.5s ease;
+}
+
+/* Badge styles */
+.badge {
+    font-weight: 500;
+}
+
+/* Sidebar active state */
+.nav-link.active {
+    font-weight: bold;
+}
+
+/* Map container */
+.map-container {
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* Custom question navigation for quiz */
+.question-nav .btn {
+    font-weight: bold;
+}
+
+/* Interactive elements */
+.interactive-element {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.interactive-element:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Library content card footer */
+.card-footer {
+    background-color: transparent;
+}
+
+/* AI recommendation transition */
+#ai-recommendation {
+    transition: opacity 0.5s ease;
+}
+
+/* Activity recommendation cards */
+.list-group-item-action {
+    transition: all 0.3s ease;
+}
+
+.list-group-item-action:hover {
+    transform: translateX(5px);
+}
+
+/* Quiz answer highlighting */
+.form-check:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+    border-radius: 5px;
+}
+
+.form-check-input:checked + .form-check-label {
+    font-weight: bold;
+}
+
+/* Improve map container visibility */
+.map-container {
+    border: 1px solid #dee2e6;
+}
+
+/* Style for adaptivity controls */
+.dropdown-menu .dropdown-header {
+    color: #6c757d;
+    font-weight: bold;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #adb5bd;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #6c757d;
+}
+
+/* Adapt text for small screens */
+@media (max-width: 576px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .timeline-date {
+        width: 100px;
+        font-size: 0.75rem;
+    }
+    
+    .card-title {
+        font-size: 1.1rem;
+    }
+}
+
+/* Filter badge active state */
+.btn-outline-secondary.active {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Improve focus outlines for accessibility */
+:focus {
+    outline: 2px solid rgba(0, 123, 255, 0.5);
+    outline-offset: 2px;
+}
+
+/* Custom alert styles */
+.alert-success {
+    background-color: #e8f5e9;
+    border-color: #c8e6c9;
+    color: #2e7d32;
+}
+
+.alert-info {
+    background-color: #e3f2fd;
+    border-color: #bbdefb;
+    color: #0d47a1;
+}
+
+.alert-warning {
+    background-color: #fff8e1;
+    border-color: #ffecb3;
+    color: #f57f17;
+}
+
+/* Animation for new badges */
+.badge.bg-success {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 5px rgba(40, 167, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+}
+
+/* Animación de pulso para elementos en espera de datos */
+.waiting-for-data {
+    animation: pulse-bg 2s infinite;
+}
+
+@keyframes pulse-bg {
+    0% {
+        background-color: rgba(108, 117, 125, 0.05);
+    }
+    50% {
+        background-color: rgba(108, 117, 125, 0.15);
+    }
+    100% {
+        background-color: rgba(108, 117, 125, 0.05);
+    }
+}
+
+/* Contenedores de carga con altura mínima */
+.activities-container-empty,
+.feedback-container-empty,
+.recommendations-container-empty {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    color: #6c757d;
+    background-color: rgba(0, 0, 0, 0.02);
+    border-radius: 0.25rem;
+}
+
+/* Mejoras para indicadores de carga */
+.spinner-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+/* Transiciones suaves para actualización de datos */
+.data-container {
+    transition: opacity 0.5s ease;
+}
+
+.data-container.loading {
+    opacity: 0.6;
+}
+
+/* Estado de error para fallos en carga de datos */
+.data-error {
+    color: #dc3545;
+    padding: 0.5rem;
+    border: 1px solid #f5c2c7;
+    border-radius: 0.25rem;
+    background-color: #f8d7da;
+    margin-top: 0.5rem;
+}
+
+/* Estilos para placeholders de datos */
+.data-placeholder {
+    color: #6c757d;
+    background-color: rgba(108, 117, 125, 0.1);
+    border-radius: 3px;
+    padding: 2px 5px;
+    min-width: 20px;
+    min-height: 1em;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.data-placeholder::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: placeholder-shimmer 1.5s infinite;
+}
+
+@keyframes placeholder-shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Contenedores de carga */
+.chart-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Barras de progreso para datos dinámicos */
+.data-progress {
+    width: 0%;
+    transition: width 1s ease;
+}
+
+/* Estilos para contenedores de datos generados por IA */
+.data-placeholder-ai {
+    font-style: italic;
+    transition: all 0.5s ease;
+}
+
+/* Estilos para zonas de carga de contenido */
+.content-loading {
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #6c757d;
+}
+
+/* Imagen placeholder */
+.image-placeholder {
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #adb5bd;
+    min-height: 150px;
+    border: 1px dashed #dee2e6;
+}
+
+/* Estilos de navegación dinámicos */
+#question-navigation-container {
+    min-height: 60px;
+}
+
+/* Contenedor de recomendaciones de IA */
+#ai-recommendations-container, 
+#recent-activity-container,
+#recommended-activities-container,
+#recent-feedback-container {
+    min-height: 200px;
+}
+
+/* Animación para cargar */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 5px rgba(40, 167, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+}
+
+/* Animaciones mejoradas para estados de carga */
+.spinner-border, .spinner-grow {
+    opacity: 0.7;
+}
+
+/* Animar placeholders adicionales en el dashboard de admin */
+.distribution-placeholder {
+    opacity: 0.7;
+    animation: pulse-opacity 2s infinite;
+}
+
+@keyframes pulse-opacity {
+    0% { opacity: 0.5; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.5; }
+}
+
+/* Estilo para progress bar animada en contenedores de carga */
+.progress-bar-animated {
+    animation: progress-bar-stripes 1s linear infinite;
+}
+
+/* Mejorar visualización de placeholders en dashboard de admin */
+.card.text-white .data-placeholder {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Spinner con animaciones escalonadas */
+.spinner-border + .spinner-border,
+.spinner-grow + .spinner-grow {
+    margin-left: 0.5rem;
+}
+
+/* Separación para elementos de distribución */
+.distribution-placeholder .d-flex {
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.distribution-placeholder .d-flex:last-child {
+    border-bottom: none;
+}
+
+/* Estilos para nuevas funcionalidades de IA */
+
+/* Gráfico de dificultad circular */
+.difficulty-chart {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.difficulty-bg {
+    fill: none;
+    stroke: #eee;
+    stroke-width: 3;
+}
+
+.difficulty-fill {
+    fill: none;
+    stroke: #4e73df;
+    stroke-width: 3;
+    stroke-linecap: round;
+    transition: stroke-dasharray 1s ease;
+}
+
+/* Estilos para el chat con IA */
+#ai-chat-container {
+    border: 1px solid #e3e6f0;
+    border-radius: 0.35rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #f8f9fc;
+}
+
+.ai-message, .user-message {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    max-width: 80%;
+}
+
+.ai-message {
+    background-color: #e3f2fd;
+    border-top-left-radius: 0;
+    margin-right: auto;
+    color: #0c63e4;
+}
+
+.user-message {
+    background-color: #e8f5e9;
+    border-top-right-radius: 0;
+    margin-left: auto;
+    color: #2e7d32;
+    text-align: right;
+}
+
+.suggestion-btn {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+}
+
+/* Radar chart de habilidades */
+#skills-radar-container {
+    position: relative;
+}
+
+/* Estilos para tarjetas de fortalezas y debilidades */
+.border-left-success {
+    border-left: 0.25rem solid #1cc88a !important;
+}
+
+.border-left-warning {
+    border-left: 0.25rem solid #f6c23e !important;
+}
+
+/* Estilos para recursos encontrados por IA */
+#ai-resources-container .resource-card {
+    transition: transform 0.2s ease;
+}
+
+#ai-resources-container .resource-card:hover {
+    transform: translateY(-5px);
+}
+
+.resource-type-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* Animación para feedback inmediato */
+@keyframes feedback-slide-in {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+#feedback-container {
+    animation: feedback-slide-in 0.3s ease forwards;
+}
+
+/* Mejoras para visualización en dispositivos móviles */
+@media (max-width: 576px) {
+    .ai-message, .user-message {
+        max-width: 90%;
+    }
+    
+    .suggestion-btn {
+        margin-bottom: 0.5rem;
+    }
+    
+    #strengthsWeaknessesCollapse .row {
+        flex-direction: column;
+    }
+    
+    #strengthsWeaknessesCollapse .col-md-6:last-child {
+        margin-top: 1rem;
+    }
+}
+
+/* Estilos para el sistema de chat con IA */
+.typing-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #6c757d;
+    margin: 0 2px;
+    animation: typing-animation 1.4s infinite both;
+}
+
+.typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing-animation {
+    0%, 20%, 100% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translateY(-5px);
+        opacity: 1;
+    }
+}
+
+/* Estilos para radar chart de habilidades */
+#skills-radar-container {
+    position: relative;
+    min-height: 250px;
+}
+
+/* Estilos para el sistema de feedback inmediato */
+#feedback-container {
+    position: relative;
+    z-index: 100;
+}
+
+.feedback-result .alert {
+    display: flex;
+    align-items: center;
+}
+
+.feedback-result .alert i {
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+.feedback-explanation {
+    background-color: #f8f9fa;
+    border-left: 4px solid #6c757d;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+/* Placeholders para contenido dinámico */
+.placeholder-glow {
+    display: block;
+    animation: placeholder-glow 2s ease-in-out infinite;
+}
+
+.placeholder {
+    display: inline-block;
+    min-height: 1em;
+    vertical-align: middle;
+    cursor: wait;
+    background-color: currentColor;
+    opacity: 0.5;
+    border-radius: 4px;
+}
+
+/* Estilos para componentes de recursos generados por IA */
+.resource-card {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.resource-card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.resource-source-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+/* Estilos para categorización inteligente */
+#ai-categories-container .btn-category {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    color: #495057;
+    transition: all 0.2s ease;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+#ai-categories-container .btn-category:hover,
+#ai-categories-container .btn-category.active {
+    background-color: #e9ecef;
+    border-color: #ced4da;
+    color: #212529;
+}
+
+#ai-categories-container .btn-category.ai-generated {
+    background-color: #e3f2fd;
+    border-color: #90caf9;
+    color: #0d47a1;
+}
+
+#ai-categories-container .btn-category.ai-generated:hover,
+#ai-categories-container .btn-category.ai-generated.active {
+    background-color: #bbdefb;
+    border-color: #64b5f6;
+    color: #0d47a1;
+}
+
+/* Estilos para indicador de dificultad */
+.difficulty-indicator {
+    position: relative;
+}
+
+.difficulty-chart {
+    transform: rotate(-90deg);
+}
+
+/* Mejoras responsivas para las nuevas características */
+@media (max-width: 768px) {
+    #ai-chat-container {
+        height: 250px;
+    }
+    
+    .ai-message, .user-message {
+        max-width: 85%;
+        padding: 0.5rem 0.75rem;
+    }
+    
+    #skills-radar-container {
+        height: 220px;
+    }
+    
+    .suggestion-btn {
+        margin-bottom: 5px;
+    }
+    
+    #feedback-container {
+        margin-left: -15px;
+        margin-right: -15px;
+        border-radius: 0;
+    }
+} 
