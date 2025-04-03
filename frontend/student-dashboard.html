@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard del Estudiante - Plataforma Educativa Historia y Geografía</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">HistoriaGeo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="student-dashboard.html">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="quizzes.html">Evaluaciones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="library.html">Biblioteca</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="chat.html">Asistente IA</a>
+            </li>
+          </ul>
+          <div class="d-flex align-items-center">
+            <span class="text-white me-3">Hola, <span class="user-name">Estudiante</span></span>
+            <button id="logout-btn" class="btn btn-outline-light">Cerrar sesión</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container my-5">
+    <!-- Contenedor para los datos de progreso (será llenado por JS) -->
+    <div id="progress-container">
+      <div class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-2">Cargando datos de progreso...</p>
+      </div>
+    </div>
+    
+    <div class="row mt-5">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h3 class="m-0">Próximas evaluaciones</h3>
+          </div>
+          <div class="card-body" id="upcoming-assessments-container">
+            <div class="text-center py-3">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+              </div>
+              <p class="mt-2">Cargando evaluaciones...</p>
+            </div>
+          </div>
+          <div class="card-footer">
+            <a href="quizzes.html" class="btn btn-primary">Ver todas las evaluaciones</a>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h3 class="m-0">Recursos recomendados</h3>
+          </div>
+          <div class="card-body" id="recommended-resources-container">
+            <div class="text-center py-3">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+              </div>
+              <p class="mt-2">Cargando recomendaciones...</p>
+            </div>
+          </div>
+          <div class="card-footer">
+            <a href="library.html" class="btn btn-primary">Explorar biblioteca</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-dark text-white py-4 mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h3>HistoriaGeo</h3>
+          <p>Plataforma de aprendizaje personalizado para Historia y Geografía</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p>&copy; 2023 HistoriaGeo. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/quiz.js"></script>
+  
+  <script>
+    // Cargar evaluaciones próximas
+    async function loadUpcomingAssessments() {
+      try {
+        const response = await fetch(`${API_URL}/quizzes?limit=3`, {
+          headers: {
+            'x-auth-token': token
+          }
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          renderUpcomingAssessments(data.data);
+        } else {
+          document.getElementById('upcoming-assessments-container').innerHTML = 
+            '<p class="text-center">No se pudieron cargar las evaluaciones</p>';
+        }
+      } catch (error) {
+        console.error('Error cargando evaluaciones:', error);
+        document.getElementById('upcoming-assessments-container').innerHTML = 
+          '<p class="text-center">Error de conexión</p>';
+      }
+    }
+    
+    function renderUpcomingAssessments(quizzes) {
+      const container = document.getElementById('upcoming-assessments-container');
+      
+      if (quizzes.length === 0) {
+        container.innerHTML = '<p class="text-center">No hay evaluaciones disponibles</p>';
+        return;
+      }
+      
+      container.innerHTML = quizzes.map(quiz => `
+        <div class="assessment-item mb-3">
+          <h4>${quiz.title}</h4>
+          <p>${quiz.description}</p>
+          <a href="quiz.html?id=${quiz._id}" class="btn btn-sm btn-outline-primary">Iniciar</a>
+        </div>
+      `).join('<hr>');
+    }
+    
+    // Cargar recursos recomendados
+    async function loadRecommendedResources() {
+      try {
+        const response = await fetch(`${API_URL}/resources?recommended=true&limit=3`, {
+          headers: {
+            'x-auth-token': token
+          }
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          renderRecommendedResources(data.data);
+        } else {
+          document.getElementById('recommended-resources-container').innerHTML = 
+            '<p class="text-center">No se pudieron cargar las recomendaciones</p>';
+        }
+      } catch (error) {
+        console.error('Error cargando recomendaciones:', error);
+        document.getElementById('recommended-resources-container').innerHTML = 
+          '<p class="text-center">Error de conexión</p>';
+      }
+    }
+    
+    function renderRecommendedResources(resources) {
+      const container = document.getElementById('recommended-resources-container');
+      
+      if (resources.length === 0) {
+        container.innerHTML = '<p class="text-center">No hay recomendaciones disponibles</p>';
+        return;
+      }
+      
+      container.innerHTML = resources.map(resource => `
+        <div class="resource-item mb-3">
+          <h4>${resource.title}</h4>
+          <p>${resource.description}</p>
+          <div class="d-flex align-items-center">
+            <span class="badge bg-secondary me-2">${resource.type}</span>
+            <a href="${resource.url}" target="_blank" class="btn btn-sm btn-outline-primary">Ver recurso</a>
+          </div>
+        </div>
+      `).join('<hr>');
+    }
+    
+    // Inicializar página
+    document.addEventListener('DOMContentLoaded', () => {
+      // Esta función está en quiz.js
+      loadStudentProgress();
+      
+      // Cargar datos adicionales
+      loadUpcomingAssessments();
+      loadRecommendedResources();
+    });
+  </script>
+</body>
+</html> 

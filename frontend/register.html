@@ -3,15 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro - Plataforma Educativa Historia y Geografía</title>
+  <title>Registro - HistoGeo Adaptativo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
+  <!-- Precargar mockData para GitHub Pages -->
+  <script>
+    // Detectar si estamos en GitHub Pages
+    const isGitHubPages = window.location.hostname === 'emiliogruiz.github.io';
+    // URLs base según entorno
+    const BASE_URL = isGitHubPages ? '/web' : '';
+    document.addEventListener('DOMContentLoaded', function() {
+      // Corregir URLs en GitHub Pages
+      if (isGitHubPages) {
+        document.querySelectorAll('a[href]').forEach(link => {
+          if (link.getAttribute('href').startsWith('/') || 
+              link.getAttribute('href').indexOf('://') === -1) {
+            link.href = BASE_URL + link.getAttribute('href');
+          }
+        });
+      }
+    });
+  </script>
 </head>
 <body>
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container">
-        <a class="navbar-brand" href="index.html">HistoriaGeo</a>
+        <a class="navbar-brand" href="index.html">HistoGeo Adaptativo</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -35,6 +54,9 @@
   <main class="container my-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
+        <!-- Contenedor para alertas -->
+        <div id="alert-container" class="mb-3"></div>
+        
         <div class="card">
           <div class="card-header bg-primary text-white">
             <h2 class="m-0">Crear cuenta</h2>
@@ -44,16 +66,20 @@
               <div class="mb-3">
                 <label for="username" class="form-label">Nombre de usuario</label>
                 <input type="text" class="form-control" id="username" required>
+                <div class="invalid-feedback" id="username-feedback"></div>
               </div>
               
               <div class="mb-3">
                 <label for="email" class="form-label">Correo electrónico</label>
                 <input type="email" class="form-control" id="email" required>
+                <div class="invalid-feedback" id="email-feedback"></div>
               </div>
               
               <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
                 <input type="password" class="form-control" id="password" required>
+                <div class="invalid-feedback" id="password-feedback"></div>
+                <small class="form-text text-muted">La contraseña debe tener al menos 6 caracteres</small>
               </div>
               
               <div class="mb-3">
@@ -67,7 +93,10 @@
               </div>
               
               <div class="d-grid">
-                <button type="submit" class="btn btn-primary">Registrarse</button>
+                <button type="submit" class="btn btn-primary" id="submit-btn">
+                  <span class="spinner-border spinner-border-sm d-none" id="loading-spinner" role="status" aria-hidden="true"></span>
+                  <span id="button-text">Registrarse</span>
+                </button>
               </div>
             </form>
           </div>
@@ -93,7 +122,172 @@
     </div>
   </footer>
 
+  <!-- Scripts -->
   <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/mockData.js"></script>
   <script src="js/auth.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Verificar si ya existe sesión
+      const token = localStorage.getItem('token');
+      if (token) {
+        // Redirigir al dashboard si ya está autenticado
+        window.location.href = `${BASE_URL}/student-dashboard.html`;
+        return;
+      }
+      
+      const registerForm = document.getElementById('register-form');
+      const submitBtn = document.getElementById('submit-btn');
+      const loadingSpinner = document.getElementById('loading-spinner');
+      const buttonText = document.getElementById('button-text');
+      
+      registerForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Validar el formulario
+        const username = document.getElementById('username').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const program = document.getElementById('program').value;
+        
+        // Reset feedbacks
+        document.getElementById('username-feedback').textContent = '';
+        document.getElementById('email-feedback').textContent = '';
+        document.getElementById('password-feedback').textContent = '';
+        
+        let isValid = true;
+        
+        // Validar username
+        if (username.length < 3) {
+          document.getElementById('username').classList.add('is-invalid');
+          document.getElementById('username-feedback').textContent = 'El nombre de usuario debe tener al menos 3 caracteres';
+          isValid = false;
+        } else {
+          document.getElementById('username').classList.remove('is-invalid');
+        }
+        
+        // Validar email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          document.getElementById('email').classList.add('is-invalid');
+          document.getElementById('email-feedback').textContent = 'Ingresa un correo electrónico válido';
+          isValid = false;
+        } else {
+          document.getElementById('email').classList.remove('is-invalid');
+        }
+        
+        // Validar password
+        if (password.length < 6) {
+          document.getElementById('password').classList.add('is-invalid');
+          document.getElementById('password-feedback').textContent = 'La contraseña debe tener al menos 6 caracteres';
+          isValid = false;
+        } else {
+          document.getElementById('password').classList.remove('is-invalid');
+        }
+        
+        if (!isValid) return;
+        
+        // Mostrar cargando
+        submitBtn.disabled = true;
+        loadingSpinner.classList.remove('d-none');
+        buttonText.textContent = 'Procesando...';
+        
+        try {
+          // Determinar API_URL según el entorno
+          const API_URL = isGitHubPages 
+            ? 'https://tu-backend-api.herokuapp.com/api' // Reemplaza con la URL de tu backend
+            : 'http://localhost:5000/api';
+          
+          // En GitHub Pages, si no hay backend real, usar el mock directamente
+          if (isGitHubPages) {
+            await new Promise(resolve => setTimeout(resolve, 800)); // Simular latencia
+            
+            // Simular registro exitoso
+            localStorage.setItem('token', mockData.token);
+            
+            // Mostrar mensaje de éxito
+            showAlert('Registro exitoso. Redirigiendo al dashboard...', 'success');
+            
+            // Redirigir después de 1 segundo
+            setTimeout(() => {
+              window.location.href = `${BASE_URL}/student-dashboard.html`;
+            }, 1000);
+            return;
+          }
+          
+          // Código normal para localhost
+          const response = await fetch(`${API_URL}/auth/register`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              username,
+              email,
+              password,
+              program
+            })
+          });
+          
+          const data = await response.json();
+          
+          if (data.success) {
+            // Guardar token
+            localStorage.setItem('token', data.token);
+            
+            // Mostrar mensaje de éxito
+            showAlert('Registro exitoso. Redirigiendo al dashboard...', 'success');
+            
+            // Redirigir después de 1 segundo
+            setTimeout(() => {
+              window.location.href = `${BASE_URL}/student-dashboard.html`;
+            }, 1000);
+          } else {
+            // Mostrar error
+            showAlert(data.message || 'Error en el registro', 'danger');
+            
+            // Restaurar botón
+            submitBtn.disabled = false;
+            loadingSpinner.classList.add('d-none');
+            buttonText.textContent = 'Registrarse';
+          }
+        } catch (error) {
+          console.error('Error en el registro:', error);
+          showAlert('Error de conexión', 'danger');
+          
+          // Restaurar botón
+          submitBtn.disabled = false;
+          loadingSpinner.classList.add('d-none');
+          buttonText.textContent = 'Registrarse';
+        }
+      });
+      
+      // Función para mostrar alertas
+      function showAlert(message, type) {
+        const alertContainer = document.getElementById('alert-container');
+        
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+        alertDiv.role = 'alert';
+        
+        alertDiv.innerHTML = `
+          ${message}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        
+        alertContainer.innerHTML = '';
+        alertContainer.appendChild(alertDiv);
+        
+        // Auto-cerrar después de 5 segundos
+        setTimeout(() => {
+          alertDiv.classList.remove('show');
+          setTimeout(() => {
+            alertContainer.removeChild(alertDiv);
+          }, 150);
+        }, 5000);
+      }
+    });
+  </script>
 </body>
 </html> 

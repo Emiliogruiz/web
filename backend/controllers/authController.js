@@ -1,35 +1,49 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
-// Register a new user
+// Registrar nuevo usuario
 exports.register = async (req, res) => {
   try {
     const { username, email, password, program } = req.body;
     
-    // Check if user already exists
+    // Verificar si el usuario ya existe
     const userExists = await User.findOne({ $or: [{ email }, { username }] });
     if (userExists) {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Usuario o email ya está registrado' 
+      return res.status(400).json({
+        success: false,
+        message: 'El email o nombre de usuario ya está registrado'
       });
     }
     
-    // Create new user
+    // Crear usuario inicial con áreas de conocimiento básicas
     const user = new User({
       username,
       email,
       password,
-      program
+      program,
+      knowledgeAreas: [
+        {
+          area: 'Historia',
+          level: 10,
+          strengths: [],
+          weaknesses: ['Conocimiento básico']
+        },
+        {
+          area: 'Geografía',
+          level: 10,
+          strengths: [],
+          weaknesses: ['Conocimiento básico']
+        }
+      ]
     });
     
     await user.save();
     
-    // Create token
+    // Crear token JWT
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
-      { expiresIn: '24h' }
+      { expiresIn: '7d' }
     );
     
     res.status(201).json({
@@ -51,12 +65,12 @@ exports.register = async (req, res) => {
   }
 };
 
-// Login user
+// Iniciar sesión
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     
-    // Find user
+    // Buscar usuario
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({
@@ -65,7 +79,7 @@ exports.login = async (req, res) => {
       });
     }
     
-    // Check password
+    // Verificar contraseña
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(400).json({
@@ -74,11 +88,11 @@ exports.login = async (req, res) => {
       });
     }
     
-    // Create token
+    // Crear token JWT
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
-      { expiresIn: '24h' }
+      { expiresIn: '7d' }
     );
     
     res.status(200).json({
@@ -100,16 +114,24 @@ exports.login = async (req, res) => {
   }
 };
 
-// Get current user
+// Obtener usuario actual
 exports.getCurrentUser = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
+    
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'Usuario no encontrado'
+      });
+    }
+    
     res.status(200).json({
       success: true,
       user
     });
   } catch (error) {
-    console.error('Error al obtener usuario:', error);
+    console.error('Error obteniendo usuario:', error);
     res.status(500).json({
       success: false,
       message: 'Error en el servidor'

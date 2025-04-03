@@ -5,12 +5,15 @@ const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    trim: true
   },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    trim: true,
+    lowercase: true
   },
   password: {
     type: String,
@@ -23,7 +26,28 @@ const UserSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  completedAssessments: {
+    type: Number,
+    default: 0
+  },
+  averageScore: {
+    type: Number,
+    default: 0
+  },
+  knowledgeAreas: [
+    {
+      area: {
+        type: String
+      },
+      level: {
+        type: Number,
+        default: 0
+      },
+      strengths: [String],
+      weaknesses: [String]
+    }
+  ]
 });
 
 // Hash password before saving
