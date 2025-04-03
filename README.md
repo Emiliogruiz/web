@@ -42,3 +42,22 @@ npm install
 ```
 
 3. Crear archivo `.env` en la carpeta `backend` con las siguientes variables: 
+```
+
+## Verificación de implementación
+
+Para verificar que los cambios se implementaron correctamente:
+
+1. Navega a tu sitio: https://emiliogruiz.github.io/web/
+2. Prueba el flujo completo:
+   - Registro de usuario
+   - Inicio de sesión
+   - Realización de evaluación
+   - Visualización de resultados y recomendaciones
+
+La plataforma ahora debería mostrar un flujo de datos más cohesivo entre la base de datos, la IA y la interfaz gráfica, ofreciendo una experiencia educativa verdaderamente adaptativa.
+
+¿Hay algún aspecto específico de la implementación que te gustaría que explique en más detalle?
+
+# Si usas Node.js
+npx serve

@@ -19,9 +19,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Conexión a MongoDB
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Conectado a MongoDB'))
-  .catch(err => console.error('Error conectando a MongoDB:', err));
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('MongoDB conectado'))
+.catch(err => {
+  console.error('Error conectando a MongoDB:', err);
+  process.exit(1);
+});
 
 // Inicializar OpenAI
 const openai = new OpenAI({
@@ -141,7 +147,30 @@ app.get('/api/status', (req, res) => {
   res.json({ status: 'online', version: '1.0.0' });
 });
 
+// Definir rutas
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/quizzes', require('./routes/quizRoutes'));
+app.use('/api/resources', require('./routes/resourceRoutes'));
+app.use('/api/chat', require('./routes/chatRoutes'));
+
+// Servir archivos estáticos en producción
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../frontend')));
+  
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../frontend', 'index.html'));
+  });
+}
+
+// Manejar errores 404
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: 'Recurso no encontrado'
+  });
+});
+
 // Iniciar servidor
 app.listen(PORT, () => {
-  console.log(`Servidor funcionando en puerto ${PORT}`);
+  console.log(`Servidor iniciado en puerto ${PORT}`);
 }); 

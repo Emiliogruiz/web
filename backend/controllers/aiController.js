@@ -7,7 +7,18 @@ const openai = new OpenAI({
   dangerouslyAllowBrowser: false // Ensure this is false for server-side usage
 });
 
-// ... existing code ...
+// Función para manejar la conversación del chat
+async function handleChat(message, studentContext) {
+  const actions = [];
+  const relatedResources = []; // Este array debería llenarse con recursos relevantes
+  
+  // Analizar mensaje para determinar acciones sugeridas
+  
+  // Si el mensaje sugiere querer realizar una evaluación
+  if (message.toLowerCase().includes('quiz') || 
+      message.toLowerCase().includes('evaluación') || 
+      message.toLowerCase().includes('evaluar') || 
+      message.toLowerCase().includes('prueba')) {
     actions.push({
       type: 'navigate',
       url: 'quiz.html',
@@ -39,7 +50,18 @@ const openai = new OpenAI({
     });
   }
   
-  return actions;
+  // Generar respuesta de IA
+  const aiResponse = await generateAIResponse(message, studentContext, relatedResources);
+  
+  return {
+    message: aiResponse,
+    actions: actions
+  };
+}
+
+// Función para evaluar respuestas
+async function evaluateResponse(studentResponse, modelAnswer) {
+  return await evaluateOpenEndedResponse(studentResponse, modelAnswer);
 }
 
 // Función para generar respuesta de IA
